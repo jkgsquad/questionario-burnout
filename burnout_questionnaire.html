@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionário de Burnout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 40px;
+        }
+        .question-container {
+            display: none;
+        }
+        .result-container {
+            display: none;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Questionário de Burnout</h1>
+    <div id="question-container" class="question-container">
+        <p id="question-text"></p>
+        <button class="btn" onclick="answer(1)">Nunca (1)</button>
+        <button class="btn" onclick="answer(2)">Anualmente (2)</button>
+        <button class="btn" onclick="answer(3)">Mensalmente (3)</button>
+        <button class="btn" onclick="answer(4)">Semanalmente (4)</button>
+        <button class="btn" onclick="answer(5)">Diariamente (5)</button>
+    </div>
+
+    <div id="result-container" class="result-container"></div>
+
+    <script>
+        const questions = [
+            "Sinto-me esgotado(a) emocionalmente em relação ao meu trabalho.",
+            "Sinto-me excessivamente exausto ao final da minha jornada de trabalho.",
+            "Levanto-me cansado(a) e sem disposição para realizar o meu trabalho.",
+            "Envolvo-me com facilidade nos problemas dos outros.",
+            "Trato algumas pessoas como se fossem da minha família.",
+            "Tenho que desprender grande esforço para realizar minhas tarefas laborais.",
+            "Acredito que eu poderia fazer mais pelas pessoas assistidas por mim.",
+            "Sinto que meu salário é desproporcional às funções que executo.",
+            "Sinto que sou uma referência para as pessoas que lido diariamente.",
+            "Sinto-me com pouca vitalidade, desanimado(a).",
+            "Não me sinto realizado(a) com o meu trabalho.",
+            "Não sinto mais tanto amor pelo meu trabalho como antes.",
+            "Não acredito mais naquilo que realizo profissionalmente.",
+            "Sinto-me sem forças para conseguir algum resultado significante.",
+            "Sinto que estou no emprego apenas por causa do salário.",
+            "Tenho me sentido mais estressado(a) com as pessoas que atendo.",
+            "Sinto-me responsável pelos problemas das pessoas que atendo.",
+            "Sinto que as pessoas me culpam pelos seus problemas.",
+            "Penso que não importa o que eu faça, nada vai mudar no meu trabalho.",
+            "Sinto que não acredito mais na profissão que exerço."
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function showQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById("question-text").innerText = questions[currentQuestion];
+                document.getElementById("question-container").style.display = "block";
+            } else {
+                showResult();
+            }
+        }
+
+        function answer(value) {
+            score += value;
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("question-container").style.display = "none";
+            let resultText = "";
+
+            if (score <= 20) {
+                resultText = "Nenhum indício de Burnout.";
+            } else if (score <= 40) {
+                resultText = "Possibilidade de desenvolver Burnout. Procure trabalhar a prevenção.";
+            } else if (score <= 60) {
+                resultText = "Fase inicial da Burnout. Procure ajuda profissional.";
+            } else if (score <= 80) {
+                resultText = "Burnout começa a se instalar. Procure ajuda urgente.";
+            } else {
+                resultText = "Burnout considerável. Procure tratamento o quanto antes.";
+            }
+
+            document.getElementById("result-container").innerText = `Sua pontuação: ${score}.
+${resultText}`;
+            document.getElementById("result-container").style.display = "block";
+        }
+
+        // Inicia o questionário
+        showQuestion();
+    </script>
+
+</body>
+</html>
